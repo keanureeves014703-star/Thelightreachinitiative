@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The LightReach Initiative | Home</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{ --brand:#4db8ff; --ink:#0e2b4f; --paper:#ffffff }
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      font-family:Arial,Helvetica,sans-serif;
+      background:var(--paper) url('bg1.jpg') no-repeat center/cover fixed;
+      color:var(--ink); margin:0;
+    }
+    header{ background:var(--brand); color:#fff; padding:1.2em 1em }
+    header .inner{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px }
+    header img.logo{ height:54px; width:auto }
+    header h1{ margin:0; font-size:1.6em }
+    header p{ margin:.2em 0 0; opacity:.95 }
+    nav{ background:#0e2b4f; display:flex; justify-content:center; gap:1.2em; padding:.6em; flex-wrap:wrap }
+    nav a{ color:#fff; text-decoration:none; font-weight:600 }
+    nav a:hover{ text-decoration:underline }
+    main{ max-width:1100px; margin:2rem auto; padding:0 1rem }
+    .card{ background:#fff; border-radius:12px; padding:1.2rem 1.4rem; box-shadow:0 8px 24px rgba(0,0,0,.08); margin-bottom:1.2rem }
+    .btn{ background:var(--brand); color:#fff; border:0; border-radius:10px; padding:.8rem 1.2rem; cursor:pointer; font-weight:700 }
+    .btn:hover{ filter:brightness(.95) }
+    label{ display:block; margin:.4rem 0 .2rem }
+    input,textarea{ width:100%; padding:.7rem; border:1px solid #cfe8ff; border-radius:10px }
+    .muted{ color:#456; font-size:.95em }
+    footer{ background:#0e2b4f; color:#fff; text-align:center; padding:1rem; margin-top:2rem }
+    @media (max-width:700px){ header .inner{flex-direction:column; text-align:center} }
+  </style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <img class="logo" src="logo.png" alt="The LightReach Initiative logo" />
+    <div>
+      <h1>The LightReach Initiative</h1>
+      <p>Guided by God’s love, we extend hope and practical care.</p>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="mission.html">Our Mission</a>
+  <a href="projects.html">Projects</a>
+  <a href="donate.html">Donate</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
+</nav>
+
+<main>
+  <section class="card">
+    <h2>Changing Lives, One Heart at a Time ❤️</h2>
+    <p>We serve disabled children, orphans, and underprivileged families through compassion, prayer, and action. Together, your generosity becomes a blessing.</p>
+  </section>
+
+  <section class="card">
+    <h2>Suggested Donation Tiers (USD)</h2>
+    <ul>
+      <li>$50 — Feed 5 children for a week</li>
+      <li>$150 — School supplies for a month</li>
+      <li>$250 — Medical aid package</li>
+      <li>$500 — Family support package</li>
+    </ul>
+    <p><a class="btn" href="donate.html">Donate Now</a></p>
+  </section>
+
+  <section class="card" id="contact">
+    <h2>Contact / Volunteer</h2>
+    <form id="contactForm" novalidate>
+      <input type="hidden" name="access_key" value="3b164ada-7830-4be2-b8e8-d0107d6e16d4" />
+      <input type="hidden" name="from_name" value="The LightReach Initiative Website" />
+      <input type="hidden" name="subject" value="New Contact from LightReach Website" />
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+      <label>Full Name</label><input name="name" required />
+      <label>Email</label><input name="email" type="email" required />
+      <label>Phone (optional)</label><input name="phone" />
+      <label>Message</label><textarea name="message" rows="4" required></textarea>
+      <button class="btn" type="submit">Send Message</button>
+      <p id="formNote" class="muted" style="margin-top:.6em"></p>
+    </form>
+  </section>
+</main>
+
+<footer>© 2024 The LightReach Initiative</footer>
+
+<script>
+(function(){
+  const form=document.getElementById('contactForm'); if(!form) return;
+  const note=document.getElementById('formNote');
+  form.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    note.textContent='Sending...';
+    const data=new FormData(form);
+    try{
+      const res=await fetch('https://api.web3forms.com/submit',{method:'POST',body:data});
+      const json=await res.json();
+      if(json.success){ note.textContent='✅ Message sent. We will reply soon.'; form.reset(); }
+      else { note.textContent='Could not send right now. Please try again.'; }
+    }catch(err){ note.textContent='Network error. Please try again.'; }
+  });
+})();
+</script>
+</body>
+</html>
