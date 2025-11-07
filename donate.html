@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The LightReach Initiative | Donate</title>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <style>
+    :root{ --brand:#4db8ff; --ink:#0e2b4f; --paper:#ffffff }
+    *{ box-sizing:border-box } html,body{ height:100% }
+    body{ font-family:Arial,Helvetica,sans-serif; background:var(--paper) url('bg2.jpg') no-repeat center/cover fixed; color:var(--ink); margin:0 }
+    header{ background:var(--brand); color:#fff; padding:1.2em 1em }
+    header .inner{ max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:12px }
+    header img.logo{ height:54px } header h1{ margin:0; font-size:1.6em } header p{ margin:.2em 0 0; opacity:.95 }
+    nav{ background:#0e2b4f; display:flex; justify-content:center; gap:1.2em; padding:.6em; flex-wrap:wrap } nav a{ color:#fff; text-decoration:none; font-weight:600 } nav a:hover{ text-decoration:underline }
+    main{ max-width:1100px; margin:2rem auto; padding:0 1rem } .card{ background:#fff; border-radius:12px; padding:1.2rem 1.4rem; box-shadow:0 8px 24px rgba(0,0,0,.08); margin-bottom:1.2rem }
+    .tiers{ display:flex; gap:.6rem; flex-wrap:wrap; margin:.6rem 0 }
+    .chip{ background:#e6f5ff; padding:.45rem .8rem; border-radius:999px; cursor:pointer; border:1px solid #bfe4ff }
+    .btn{ background:var(--brand); color:#fff; border:0; border-radius:10px; padding:.8rem 1.2rem; cursor:pointer; font-weight:700 }
+    .btn:hover{ filter:brightness(.95) }
+    .wallet{ font-family:monospace; word-break:break-all; background:#e6f5ff; padding:.6rem; border-radius:10px; border:1px solid #bfe4ff }
+    label{ display:block; margin:.4rem 0 .2rem }
+    input,textarea{ width:100%; padding:.7rem; border:1px solid #cfe8ff; border-radius:10px }
+    .muted{ color:#456; font-size:.95em }
+    footer{ background:#0e2b4f; color:#fff; text-align:center; padding:1rem; margin-top:2rem }
+    .row{ display:grid; grid-template-columns:1fr 1fr; gap:1rem }
+    @media (max-width:700px){ .row{ grid-template-columns:1fr } header .inner{flex-direction:column; text-align:center} }
+  </style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <img class="logo" src="logo.png" alt="The LightReach Initiative logo" />
+    <div>
+      <h1>The LightReach Initiative</h1>
+      <p>Guided by God’s love, we extend hope and practical care.</p>
+    </div>
+  </div>
+</header>
+
+<nav>
+  <a href="index.html">Home</a>
+  <a href="mission.html">Our Mission</a>
+  <a href="projects.html">Projects</a>
+  <a href="donate.html">Donate</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
+</nav>
+
+<main>
+  <section class="card">
+    <h2>Choose an Amount (USD)</h2>
+    <div class="tiers">
+      <span class="chip" onclick="setAmount(50)">$50</span>
+      <span class="chip" onclick="setAmount(150)">$150</span>
+      <span class="chip" onclick="setAmount(250)">$250</span>
+      <span class="chip" onclick="setAmount(500)">$500</span>
+    </div>
+    <label for="amount">Custom Amount</label>
+    <input id="amount" type="number" min="1" placeholder="Enter amount" />
+  </section>
+
+  <section class="card">
+    <h2>Donate with Bitcoin</h2>
+    <p class="muted">Send your gift to the wallet below, then (optionally) email us your TXID to receive a receipt.</p>
+    <p><strong>Bitcoin Wallet Address</strong></p>
+    <div class="wallet" id="wallet">bc1q9778h7gsfzg0kdclhyhzrcy98q2acyf9t0gdw9</div>
+    <p><button class="btn" onclick="copyWallet()">Copy Address</button></p>
+
+    <p>Scan this QR from your wallet app:</p>
+    <!-- If you upload qr-code.png, this loads from your site -->
+    <img src="qr-code.png" alt="Wallet QR Code" style="max-width:220px;width:100%;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.08)" />
+    <!-- Fallback QR (works even if you haven't uploaded qr-code.png yet) -->
+    <div class="muted" style="margin-top:.4em">
+      If the image above is missing, you can also scan:
+      <img alt="QR fallback" src="https://api.qrserver.com/v1/create-qr-code/?data=bitcoin%3Abc1q9778h7gsfzg0kdclhyhzrcy98q2acyf9t0gdw9&size=220x220" style="max-width:220px;width:100%;display:block;margin-top:.4em;border-radius:12px" />
+    </div>
+  </section>
+
+  <section class="card" id="email-receipt">
+    <h2>Email Receipt</h2>
+    <p class="muted">Enter your details and we’ll email your receipt.</p>
+
+    <form id="receiptForm" novalidate>
+      <div class="row">
+        <div>
+          <label for="rname">Full Name</label>
+          <input id="rname" name="name" placeholder="Jane Donor" required />
+        </div>
+        <div>
+          <label for="remail">Email (receipt will be sent here)</label>
+          <input id="remail" name="email" type="email" placeholder="jane@example.com" required />
+        </div>
+      </div>
+
+      <label for="ramount">Amount (USD)</label>
+      <input id="ramount" name="amount" type="number" min="1" placeholder="e.g. 150" required />
+
+      <label for="rtxid">Bitcoin Transaction ID (TXID)</label>
+      <input id="rtxid" name="txid" placeholder="Paste your TXID" required />
+
+      <label for="rnote">Optional Note</label>
+      <textarea id="rnote" name="note" rows="3" placeholder="In honor of..."></textarea>
+
+      <button class="btn" type="submit">Email My Receipt</button>
+      <p id="rmsg" class="muted" style="margin-top:.6em"></p>
+    </form>
+  </section>
+</main>
+
+<footer>© 2024 The LightReach Initiative</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+function setAmount(v){ document.getElementById('amount').value = v }
+function copyWallet(){
+  const w = document.getElementById('wallet').textContent.trim();
+  navigator.clipboard.writeText(w).then(()=>{ alert('Wallet address copied.'); });
+}
+(function(){
+  function genReceiptId(){
+    const t=new Date(); const s=t.toISOString().replace(/[-:.TZ]/g,'').slice(0,14);
+    const r=Math.floor(Math.random()*9000+1000); return `LRI-${s}-${r}`;
+  }
+  const PK="YOUR_EMAILJS_PUBLIC_KEY", SID="YOUR_EMAILJS_SERVICE_ID", TID="YOUR_EMAILJS_TEMPLATE_ID";
+  try{ if(PK) emailjs.init(PK); }catch(e){}
+  const f=document.getElementById('receiptForm'), note=document.getElementById('rmsg');
+  f.addEventListener('submit', async (e)=>{
+    e.preventDefault(); note.textContent='Submitting…';
+    const name=document.getElementById('rname').value.trim();
+    const email=document.getElementById('remail').value.trim();
+    const amt=document.getElementById('ramount').value.trim();
+    const txid=document.getElementById('rtxid').value.trim();
+    const extra=document.getElementById('rnote').value.trim();
+    if(!name||!email||!amt||!txid){ note.textContent='Please fill name, email, amount, and TXID.'; return; }
+    const rid=genReceiptId();
+
+    /* record in your inbox via Web3Forms */
+    try{
+      const fd=new FormData();
+      fd.append('access_key','3b164ada-7830-4be2-b8e8-d0107d6e16d4');
+      fd.append('from_name','The LightReach Initiative — Receipts');
+      fd.append('subject','Donation Receipt Request (Bitcoin)');
+      fd.append('name',name); fd.append('email',email);
+      fd.append('amount',amt); fd.append('txid',txid); fd.append('note',extra);
+      fd.append('receipt_id',rid); fd.append('replyto',email);
+      fd.append('message',`Receipt request: $${amt}, TXID: ${txid} ${extra?(' — '+extra):''}`);
+      const res=await fetch('https://api.web3forms.com/submit',{ method:'POST', body:fd });
+      const j=await res.json(); if(!j.success){ note.textContent='Could not record your request right now. Please try again.'; return; }
+    }catch(err){ note.textContent='Network error while recording request. Please try again.'; return; }
+
+    /* optional donor email via EmailJS (works after you add keys) */
+    async function sendDonor(){
+      if(!PK||!SID||!TID) return false;
+      try{
+        const vars={ donor_name:name, donor_email:email, amount_usd:amt, txid:txid, receipt_id:rid, wallet:'bc1q9778h7gsfzg0kdclhyhzrcy98q2acyf9t0gdw9', charity_name:'The LightReach Initiative', note: extra||'' };
+        const r=await emailjs.send(SID,TID,vars);
+        return r && r.status===200;
+      }catch(e){ return false; }
+    }
+    const emailed = await sendDonor();
+
+    note.innerHTML = `✅ Thank you, <strong>${name}</strong>! Your receipt request is recorded.<br>
+      <strong>Receipt ID:</strong> <code>${rid}</code><br>
+      <strong>Amount:</strong> $${amt} • <strong>TXID:</strong> <code>${txid}</code><br>
+      ${ emailed ? '📧 A receipt email has been sent to <strong>'+email+'</strong>.' : 'ℹ️ Email sending will activate once our email settings are connected.' }`;
+    f.reset();
+  });
+})();
+</script>
+</body>
+</html>
